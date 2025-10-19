@@ -1,0 +1,425 @@
+---
+title: "Conjugate Priors and Universe Age Estimation"
+author: "Mingzhe Liu"
+format: html
+editor: visual
+---
+
+## 1
+
+### (a)
+
+The prior distribution is:
+
+$$
+p(\theta) \propto \exp\left(-\frac{(\theta - \mu_\theta)^2}{2 \sigma_\theta^2}\right)
+$$
+
+$$
+p(\theta) \propto \exp\left(-\frac{1}{2 \sigma_\theta^2} (\theta^2 - 2\mu_\theta \theta)\right)
+$$
+
+The likelihood for $y_1, \dots, y_n \mid \theta$ is:
+
+$$
+p(y \mid \theta) \propto \exp\left(-\frac{1}{2 \sigma_y^2} \sum_{i=1}^n (y_i - \theta)^2\right)
+$$
+
+By expanding
+
+$$
+\sum_{i=1}^n (y_i - \theta)^2 = \sum_{i=1}^n y_i^2 - 2\theta \sum_{i=1}^n y_i + n\theta^2
+$$
+
+$$
+p(y \mid \theta) \propto \exp\left(-\frac{n}{2 \sigma_y^2} \left(\theta^2 - 2\bar{y} \theta \right)\right)
+$$
+
+where $\bar{y} = \frac{1}{n} \sum_{i=1} ^n y_i$.
+
+The posterior is proportional to the product of the prior and the likelihood:
+
+$$
+p(\theta \mid y) \propto \exp\left(-\frac{1}{2 \sigma_\theta^2} (\theta^2 - 2\mu_\theta \theta)\right) \exp \left(-\frac{n}{2 \sigma_y^2} (\theta^2 - 2\bar{y} \theta) \right)
+$$
+
+Combine terms:
+
+$$
+p(\theta \mid y) \propto \exp\left(-\frac{1}{2} \left[\left(\frac{n}{\sigma_y^2} + \frac{1}{\sigma_\theta^2}\right) \theta^2 - 2\left(\frac{n \bar{y}}{\sigma_y^2} + \frac{\mu_\theta}{\sigma_\theta^2}\right)\theta\right]\right)
+$$
+
+We could conclude that:
+
+$$
+Q_\theta = \frac{n}{\sigma_y^2} + \frac{1}{\sigma_\theta^2}, \quad \ell_\theta = \frac{n \bar{y}}{\sigma_y^2} + \frac{\mu_\theta}{\sigma_\theta^2}
+$$
+
+The posterior distribution is
+
+$$
+\theta \mid y \sim \mathcal{N}\left(Q_\theta^{-1} \ell_\theta, Q_\theta^{-1}\right)
+$$
+
+where:
+
+$$
+Q_\theta = \frac{n}{\sigma_y^2} + \frac{1}{\sigma_\theta^2}, \quad \ell_\theta = \frac{n \bar{y}}{\sigma_y^2} + \frac{\mu_\theta}{\sigma_\theta^2}
+$$
+
+### (b)
+
+By part (a)
+
+$$
+\mu_{\text{posterior}} = \frac{\ell_\theta}{Q_\theta}
+$$
+
+where:
+
+$$
+\ell_\theta = \frac{n \bar{y}}{\sigma_y^2} + \frac{\mu_\theta}{\sigma_\theta^2}, \quad Q_\theta = \frac{n}{\sigma_y^2} + \frac{1}{\sigma_\theta^2}
+$$
+
+By substitution
+
+$$
+\mu_{\text{posterior}} = \frac{\frac{n \bar{y}}{\sigma_y^2} + \frac{\mu_\theta}{\sigma_\theta^2}}{\frac{n}{\sigma_y^2} + \frac{1}{\sigma_\theta^2}}
+$$
+
+By simplification
+
+$$
+\mu_{\text{posterior}} = \frac{n \bar{y} \sigma_\theta^2 + \mu_\theta \sigma_y^2}{n \sigma_\theta^2 + \sigma_y^2}
+$$
+
+To show that
+
+$$
+\mu_{\text{posterior}} = \kappa \mu_\theta + (1 - \kappa) \bar{y}
+$$
+
+To identify $\kappa$, compare coefficients. The term multiplying $\mu_\theta$ is:
+
+$$
+\kappa = \frac{\sigma_y^2}{n \sigma_\theta^2 + \sigma_y^2}
+$$
+
+and the term multiplying $\bar{y}$ is:
+
+$$
+1 - \kappa = \frac{n \sigma_\theta^2}{n \sigma_\theta^2 + \sigma_y^2}
+$$
+
+$$
+\mu_{\text{posterior}} = \kappa \mu_\theta + (1 - \kappa) \bar{y}
+$$
+
+where $\kappa = \frac{\sigma_y^2}{n \sigma_\theta^2 + \sigma_y^2}$ and $1 - \kappa = \frac{n \sigma_\theta^2}{n \sigma_\theta^2 + \sigma_y^2}$.
+
+## 2
+
+### (a)
+
+$$
+p(y | \theta) = f(y)g(\theta)\exp\left\{\phi(\theta)^\top u(y)\right\}
+$$
+
+$$
+p(y_1, \dots, y_n | \theta) = \prod_{i=1}^n p(y_i | \theta) = \prod_{i=1}^n f(y_i)g(\theta)\exp\left\{\phi(\theta)^\top u(y_i)\right\}
+$$
+
+This simplifies to:
+
+$$
+p(y_1, \dots, y_n | \theta) = \left(\prod_{i=1}^n f(y_i)\right) g(\theta)^n \exp\left\{\phi(\theta)^\top \sum_{i=1}^n u(y_i)\right\}
+$$
+
+$\theta$ is given :
+
+$$
+p(\theta) \propto g(\theta)^\eta \exp\left\{\phi(\theta)^\top \nu\right\}
+$$ where $\eta$ and $\nu$ are the parameters of the prior.
+
+Apply Bayes theorem
+
+$$
+p(\theta | y_1, \dots, y_n) \propto p(y_1, \dots, y_n | \theta) p(\theta)
+$$
+
+Substituting the likelihood and prior,
+
+$$
+p(\theta | y_1, \dots, y_n) \propto \left(\prod_{i=1}^n f(y_i)\right) g(\theta)^n \exp\left\{\phi(\theta)^\top \sum_{i=1}^n u(y_i)\right\} g(\theta)^\eta \exp\left\{\phi(\theta)^\top \nu\right\}
+$$
+
+Simplifying
+
+$$
+p(\theta | y_1, \dots, y_n) \propto g(\theta)^{n + \eta} \exp\left\{\phi(\theta)^\top \left(\nu + \sum_{i=1}^n u(y_i)\right)\right\}.
+$$
+
+The exponent of $g(\theta)$ was updated from $\eta$ to $n + \eta$. The vector $\nu$ was updated to $\nu + \sum_{i=1}^n u(y_i)$.
+
+### (b)
+
+Consider the prior for $\theta$ and the likelihood for $y$ are exponential distributions.
+
+Assume that the data $y_1, \dots, y_n$ are independent and identically distributed (iid) from an exponential distribution with rate parameter $\theta$:
+
+$$
+p(y_i | \theta) = \theta \exp(-\theta y_i), \quad y_i \geq 0.
+$$
+
+Now assume that the prior for $\theta$ follows an exponential distribution with rate parameter $\lambda$:
+
+$$
+p(\theta) = \lambda \exp(-\lambda \theta), \quad \theta \geq 0.
+$$
+
+Given $n$ observations $y_1, \dots, y_n$, the likelihood for $\theta$ is:
+
+$$
+p(y_1, \dots, y_n | \theta) = \prod_{i=1}^n p(y_i | \theta) = \prod_{i=1}^n \theta \exp(-\theta y_i)
+$$ This simplifies to
+
+$$
+p(y_1, \dots, y_n | \theta) = \theta^n \exp\left(-\theta \sum_{i=1}^n y_i\right)
+$$
+
+Since\
+$$
+p(\theta | y_1, \dots, y_n) \propto p(y_1, \dots, y_n | \theta) p(\theta)
+$$ By substitution
+
+$$
+p(\theta | y_1, \dots, y_n) \propto \theta^n \exp\left(-\theta \sum_{i=1}^n y_i\right) \lambda \exp(-\lambda \theta)
+$$ By simplifying :
+
+$$
+p(\theta | y_1, \dots, y_n) \propto \theta^n \exp\left(-\theta \left(\sum_{i=1}^n y_i + \lambda\right)\right)
+$$
+
+The posterior distribution is a Gamma distribution
+
+$$
+p(\theta | y_1, \dots, y_n) \sim \text{Gamma}(n+1, \sum_{i=1}^n y_i + \lambda),
+$$ where the shape parameter is $n+1$ and the rate parameter is $\sum_{i=1}^n y_i + \lambda$.
+
+Also, the posterior distribution is: $$
+p(\theta | y_1, \dots, y_n) \propto \theta^n \exp\left(-\theta \left(\sum_{i=1}^n y_i + \lambda\right)\right)
+$$ This can be written in the exponential family form $$
+p(\theta) \propto g(\theta)^\eta \exp\left\{\phi(\theta)^\top \nu\right\}
+$$
+
+where $$
+g(\theta) = \theta, \quad \eta = n, \quad \phi(\theta) = -\theta, \quad \nu = \sum_{i=1}^n y_i + \lambda
+$$
+
+Thus, the posterior follows the exponential family form.
+
+## 3
+
+```{r}
+library(gamair)
+data(hubble)
+attach(hubble)
+summary(lm(y~x))
+plot(x, y, xlab = "Distance (Mpc)", ylab = "Velocity (kms^-1)")
+
+
+```
+
+### (a)
+
+$$
+y_i = x_i \theta + \epsilon_i, \quad \epsilon_i \sim N(0, \sigma_y^2),
+$$
+
+The likelihood function for the data $y = (y_1, y_2, \dots, y_n)$ is:
+
+$$
+p(y | \theta, \tau_y) \propto \exp\left(-\frac{1}{2} \tau_y \sum_{i=1}^n (y_i - x_i \theta)^2\right)
+$$
+
+since $\tau_y = \sigma_y ^{-2}$
+
+$$
+p(y | \theta, \tau_y) \propto \exp\left(-\frac{1}{2} \tau_y \left( \sum_{i=1}^n y_i^2 - 2 \theta \sum_{i=1}^n x_i y_i + \theta^2 \sum_{i=1}^n x_i^2 \right)\right)
+$$
+
+The prior is
+
+$$
+p(\theta) \propto 1.
+$$ By Bayes' theorem, the posterior is
+
+$$
+p(\theta | y, \tau_y) \propto \exp\left(-\frac{1}{2} \tau_y \left( \theta^2 \sum_{i=1}^n x_i^2 - 2 \theta \sum_{i=1}^n x_i y_i \right)\right)
+$$ For the part
+
+$$
+\theta^2 \sum_{i=1}^n x_i^2 - 2 \theta \sum_{i=1}^n x_i y_i
+$$
+
+$$
+\theta^2 \sum_{i=1}^n x_i^2 - 2 \theta \sum_{i=1}^n x_i y_i = \sum_{i=1}^n x_i^2 \left( \theta^2 - 2 \theta \frac{\sum_{i=1}^n x_i y_i}{\sum_{i=1}^n x_i^2} \right)
+$$
+
+By adding and subtracting $\left( \frac{\sum_{i=1}^n x_i y_i}{\sum_{i=1}^n x_i^2} \right)^2$,
+
+$$
+\sum_{i=1}^n x_i^2 \left( \theta^2 - 2 \theta \frac{\sum_{i=1}^n x_i y_i}{\sum_{i=1}^n x_i^2} \right)
+= \sum_{i=1}^n x_i^2 \left( \left( \theta - \frac{\sum_{i=1}^n x_i y_i}{\sum_{i=1}^n x_i^2} \right)^2 - \left( \frac{\sum_{i=1}^n x_i y_i}{\sum_{i=1}^n x_i^2} \right)^2 \right)
+$$
+
+Since $\left(\frac{\sum_{i=1} ^n x_i y_i}{\sum_{i=1} ^n x_i^2} \right)^2$ is a constant, and substitute the above back to the posterior
+
+$$
+p(\theta | y, \tau_y) \propto
+\exp\left( -\frac{1}{2} \tau_y \sum_{i=1}^n x_i^2 \left( \theta - \frac{\sum_{i=1}^n x_i y_i}{\sum_{i=1}^n x_i^2} \right)^2 \right)
+$$
+
+$$
+\mu_\theta = \frac{\sum_{i=1}^n x_i y_i}{\sum_{i=1}^n x_i^2}
+$$
+
+$$
+\text{Var}(\theta | y, \tau_y) = \frac{1}{\tau_y \sum_{i=1}^n x_i^2}
+$$
+
+Thus,
+
+$$
+\theta | y, \tau_y \sim N\left(\frac{\sum_{i=1}^n x_i y_i}{\sum_{i=1}^n x_i^2}, \frac{1}{\tau_y \sum_{i=1}^n x_i^2}\right)
+$$ Where
+
+$$
+Q_\theta = \tau_y \sum_{i=1}^n x_i^2, \quad \ell_\theta = \tau_y \sum_{i=1}^n x_i y_i
+$$
+
+Thus, the posterior distribution is also the form
+
+$$
+\theta | y, \tau_y \sim N\left( Q_\theta^{-1} \ell_\theta, Q_\theta^{-1} \right).
+$$
+
+### (b)
+
+The likelihood of the data given $\theta$ and $\tau_y$ is
+
+$$
+p(y | \theta, \tau_y) \propto \exp\left(-\frac{1}{2} \tau_y \sum_{i=1}^n (y_i - x_i \theta)^2\right)
+$$
+
+it can be write as
+
+$$
+p(y | \theta, \tau_y) \propto \tau_y^{n/2} \exp\left(-\frac{\tau_y}{2} \sum_{i=1}^n (y_i - x_i \theta)^2\right)
+$$
+
+The prior distribution for $\tau_y$ is Gamma distribution
+
+$$
+p(\tau_y) \propto \tau_y^{\alpha - 1} \exp(-\beta \tau_y)
+$$
+
+The joint posterior distribution of $\theta$ and $\tau_y$ is proportional to the product of the likelihood and the prior
+
+$$
+p(\theta, \tau_y | y) \propto p(y | \theta, \tau_y) p(\tau_y),
+$$
+
+$$
+p(\theta, \tau_y | y) \propto \tau_y^{n/2} \exp\left(-\frac{\tau_y}{2} \sum_{i=1}^n (y_i - x_i \theta)^2\right) \tau_y^{\alpha - 1} \exp(-\beta \tau_y)
+$$
+
+By simplifying
+
+$$
+p(\theta, \tau_y | y) \propto \tau_y^{\alpha + \frac{n}{2} - 1} \exp\left(-\tau_y \left(\frac{1}{2} \sum_{i=1}^n (y_i - x_i \theta)^2 + \beta \right)\right)
+$$
+
+Also,
+
+$$
+\theta | y, \tau_y \sim N\left( \hat{\theta}, \frac{1}{\tau_y \sum_{i=1}^n x_i^2} \right)
+$$
+
+where $\hat{\theta}$ is the OLS estimate:
+
+$$
+\hat{\theta} = \frac{\sum_{i=1}^n x_i y_i}{\sum_{i=1}^n x_i^2}
+$$
+
+Thus, the marginal likelihood of $\tau_y$ is proportional to the residual sum of squares:
+
+$$
+\sum_{i=1}^n (y_i - x_i \hat{\theta})^2 = (n-1)s^2,
+$$
+
+where $s^2$ is the sample variance of the residuals, which is
+
+$$
+s^2 = \frac{1}{n-1} \sum_{i=1}^n (y_i - x_i \hat{\theta})^2
+$$
+
+By substitution,
+
+$$
+p(\tau_y | y) \propto \tau_y^{\alpha + \frac{n-1}{2} - 1} \exp\left(-\tau_y \left(\frac{(n-1)s^2}{2} + \beta \right)\right)
+$$
+
+Also, the $\tau_y^{\alpha + \frac{n}{2} - 1}$ became $\tau_y^{\alpha + \frac{n-1}{2} - 1}$, since we lose 1 degree of freedom when estimating $\theta$.
+
+This is shows this is a Gamma distribution
+
+$$
+\tau_y | y \sim \text{Gamma}\left(\alpha + \frac{n-1}{2}, \beta + \frac{(n-1)s^2}{2}\right)
+$$
+
+### (c)
+
+```{r}
+alpha <- 0.01
+beta <- 0.01
+n= length(y)
+
+# OLS estimator for theta
+theta_hat <- sum(x * y) / sum(x^2)
+
+# Sample variance of the residuals
+s_squared <- sum((y - x * theta_hat)^2) / (n - 1)
+
+set.seed(2024)
+
+S <- 10000
+
+tau_y_samples <- rgamma(S, alpha + (n - 1) / 2, beta + (n - 1) * s_squared / 2)
+
+hist(tau_y_samples,breaks = 30,xlab = "Tau_y")
+
+Q_theta <- tau_y_samples * sum(x^2)
+theta_mean <- sum(x * y) / sum(x^2)
+theta_sd <- sqrt(1 / Q_theta)
+theta_samples <- rnorm(S, mean = theta_mean, sd = theta_sd)
+
+hist(theta_samples, xlab = "theta", breaks = 19)
+
+```
+
+### (d)
+
+```{r}
+age_universe_samples <- (1 / theta_samples) * 3.09e19 / (60^2 * 24 * 365)
+
+summary(age_universe_samples)
+
+library(coda)
+
+hpd_interval <- HPDinterval(as.mcmc(age_universe_samples), prob = 0.95)
+#hpd_interval
+cat("95% HPD Interval:", hpd_interval, "\n")
+```
+
+The 95% HPD interval for the age of the universe is $(11451203568, 14176051111)$.
